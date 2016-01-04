@@ -1,0 +1,18 @@
+---
+
+- name: install mongodb
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - mongodb
+
+- name: install launchagents
+  file: src=/usr/local/opt/mongodb/homebrew.mxcl.mongodb.plist path=~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist state=link force=yes
+
+- name: check if mongodb is loaded
+  shell: launchctl list
+  changed_when: False
+  register: mongodb_loaded_result
+
+- name: launch mongodb
+  shell: launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mongodb.plist
+  when: "'homebrew.mxcl.mongodb' not in mongodb_loaded_result.stdout"

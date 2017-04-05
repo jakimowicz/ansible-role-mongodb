@@ -6,10 +6,10 @@
     - mongodb
 
 - name: check if mongodb is loaded
-  shell: brew services list | grep mongodb | grep started
+  shell: brew services list | grep mongodb
   changed_when: False
   register: mongodb_loaded_result
 
 - name: launch mongodb
   shell: brew sevices start mongodb
-  when: "'mongodb' not in mongodb_loaded_result.stdout"
+  when: "'started' not in mongodb_loaded_result.stdout"

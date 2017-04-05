@@ -11,5 +11,5 @@
   register: mongodb_loaded_result
 
 - name: launch mongodb
-  shell: brew sevices start mongodb
+  shell: brew services start mongodb
   when: "'started' not in mongodb_loaded_result.stdout"
